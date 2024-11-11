@@ -7,6 +7,7 @@ import Logout from "./components/Logout";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Demopage from "./components/Demopage";
 import OTPVerification from "./components/OTPVerification";
+import UserProfile from "./components/UserProfile";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
           element={
             <ProtectedRoute>
               <Logout />
+              <UserProfile/>
               <Demopage />
             </ProtectedRoute>
           }
