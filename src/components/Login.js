@@ -8,6 +8,10 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [clickedFields, setClickedFields] = useState({
+    email: false,
+    password: false,
+  });
   const navigate = useNavigate(); // Initialize navigate function
   const { setRecoveryEmail } = useRecoveryContext(); // Destructure setRecoveryEmail
 
@@ -38,6 +42,13 @@ const Login = () => {
     }
   };
 
+  const handleInputClick = (field) => {
+    setClickedFields((prev) => ({
+      ...prev,
+      [field]: true, // Set the clicked field to true
+    }));
+  };
+
   // Function to handle password reset
   const handlePasswordReset = () => {
     if (email) {
@@ -62,24 +73,32 @@ const Login = () => {
     <div className="container contain-2 mt-5">
       <h2 className="heading-login">Login</h2>
       <form onSubmit={handleLogin}>
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">Email address</label>
+      <div className="mb-3">
+          <label htmlFor="email">{clickedFields.email ? "Email" : ""}</label>
           <input
             type="email"
-            className="form-control"
+            className="form-control control"
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required
+            aria-label="Email"
+            onClick={() => handleInputClick('email')} // Track clicks on the email field
+            placeholder={clickedFields.email ? "" : "Email"} // Clear placeholder if clicked
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="password" className="form-label">Password</label>
+          <label htmlFor="password">{clickedFields.password ? "Password" : ""}</label>
           <input
             type="password"
-            className="form-control"
+            className="form-control control"
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
+            aria-label="Password"
+            onClick={() => handleInputClick('password')} // Track clicks on the password field
+            placeholder={clickedFields.password ? "" : "Password"} // Clear placeholder if clicked
           />
         </div>
 
